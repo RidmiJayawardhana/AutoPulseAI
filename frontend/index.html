@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoPulse AI - Fuel Intelligence</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- SVG SPRITE DEFS -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <defs>
+      <symbol id="icon-pump" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 22V6a2 2 0 012-2h8a2 2 0 012 2v16"/><path d="M3 22h12M13 6h2a2 2 0 012 2v3a1 1 0 001 1h1a1 1 0 001-1V8l-3-3"/>
+        <rect x="6" y="10" width="5" height="5" rx="1"/>
+      </symbol>
+      <symbol id="icon-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+      </symbol>
+      <symbol id="icon-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="6" width="22" height="14" rx="3"/><path d="M1 10h22"/><circle cx="17" cy="14" r="1.5"/>
+      </symbol>
+      <symbol id="icon-speed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a10 10 0 110 20A10 10 0 0112 2z"/><path d="M12 12l-3-3"/><circle cx="12" cy="12" r="1"/>
+        <path d="M5.3 16a8 8 0 0113.4 0"/>
+      </symbol>
+      <symbol id="icon-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="2" width="16" height="20" rx="2"/><rect x="7" y="5" width="10" height="4" rx="1"/>
+        <circle cx="8" cy="13" r="1"/><circle cx="12" cy="13" r="1"/><circle cx="16" cy="13" r="1"/>
+        <circle cx="8" cy="17" r="1"/><circle cx="12" cy="17" r="1"/><circle cx="16" cy="17" r="1"/>
+      </symbol>
+      <symbol id="icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+        <circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/>
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+      </symbol>
+      <symbol id="icon-ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="12" rx="3"/>
+        <path d="M8 15v2M12 15v2M16 15v2M8 17h8"/>
+        <line x1="7" y1="8" x2="7" y2="10"/><line x1="12" y1="7" x2="12" y2="11"/><line x1="17" y1="8" x2="17" y2="10"/>
+        <path d="M9 9h1M15 9h1"/>
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/>
+      </symbol>
+      <symbol id="icon-table" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/>
+      </symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/>
+      </symbol>
+      <symbol id="icon-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1"/>
+      </symbol>
+      <symbol id="icon-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/>
+        <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0018 8 6 6 0 006 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 018.91 14"/>
+      </symbol>
+      <symbol id="icon-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h1l3-4h8l3 4h1a2 2 0 012 2v6a2 2 0 01-2 2h-2"/>
+        <circle cx="7.5" cy="17" r="2.5"/><circle cx="16.5" cy="17" r="2.5"/>
+      </symbol>
+      <symbol id="icon-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 8C8 10 5.9 16.17 3.82 19.34A1 1 0 004.93 21C21 17 20 3 20 3c-4 6-10 7-13 7"/>
+      </symbol>
+      <symbol id="icon-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </symbol>
+      <symbol id="icon-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/>
+      </symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="32" height="32" viewBox="0 0 32 32">
+          <circle cx="16" cy="16" r="16" fill="rgba(59,130,246,0.12)"/>
+          <circle cx="16" cy="16" r="16" fill="none" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+          <use href="#icon-car" x="6" y="6" width="20" height="20" stroke="#3b82f6"/>
+        </svg>
+      </div>
+      <span class="logo-text">AutoPulse <strong>AI</strong></span>
+    </div>
+    <div class="header-center">
+      <svg width="15" height="15" class="header-icon" color="#3b82f6"><use href="#icon-trend"/></svg>
+      <span class="tagline">Intelligent Fuel Analytics</span>
+    </div>
+    <div class="status-pill" id="statusPill">
+      <span class="status-dot"></span>
+      <span id="statusText">Connecting</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── HERO BANNER ── -->
+    <section class="hero-banner">
+      <div class="hero-text">
+        <h1>Your vehicle,<br><span>analysed.</span></h1>
+        <p>Log fill-ups and get instant AI-powered insights on fuel consumption, efficiency trends, and driving behaviour patterns.</p>
+        <div class="hero-badges">
+          <div class="badge">
+            <svg width="13" height="13"><use href="#icon-ai"/></svg>AI Pattern Detection
+          </div>
+          <div class="badge">
+            <svg width="13" height="13"><use href="#icon-chart"/></svg>Live Charts
+          </div>
+          <div class="badge">
+            <svg width="13" height="13"><use href="#icon-tip"/></svg>Smart Tips
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-illustration">
+        <svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg" class="hero-svg">
+          <defs>
+            <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0d1e42"/><stop offset="100%" stop-color="#0a0f1e"/>
+            </linearGradient>
+            <linearGradient id="roadG" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#0d1427"/><stop offset="50%" stop-color="#111828"/><stop offset="100%" stop-color="#0d1427"/>
+            </linearGradient>
+            <linearGradient id="carG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2563eb"/><stop offset="100%" stop-color="#1e40af"/>
+            </linearGradient>
+            <linearGradient id="glowG" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3b82f6" stop-opacity="0"/><stop offset="50%" stop-color="#3b82f6" stop-opacity=".3"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- sky -->
+          <rect width="340" height="160" fill="url(#skyG)" rx="12"/>
+
+          <!-- stars -->
+          <circle cx="20" cy="14" r="1" fill="#c8d8f0" opacity=".5"/>
+          <circle cx="55" cy="8" r="1.3" fill="#c8d8f0" opacity=".6"/>
+          <circle cx="100" cy="18" r=".8" fill="#c8d8f0" opacity=".4"/>
+          <circle cx="155" cy="11" r="1" fill="#c8d8f0" opacity=".5"/>
+          <circle cx="200" cy="20" r=".7" fill="#c8d8f0" opacity=".4"/>
+          <circle cx="250" cy="9" r="1.2" fill="#c8d8f0" opacity=".6"/>
+          <circle cx="300" cy="16" r="1" fill="#c8d8f0" opacity=".5"/>
+          <circle cx="320" cy="26" r=".8" fill="#c8d8f0" opacity=".4"/>
+          <circle cx="75" cy="32" r=".6" fill="#c8d8f0" opacity=".35"/>
+          <circle cx="270" cy="34" r=".8" fill="#c8d8f0" opacity=".4"/>
+
+          <!-- mountain silhouette -->
+          <polygon points="0,100 35,55 70,82 110,42 160,75 210,38 260,68 300,50 340,62 340,100" fill="#0a1020" opacity=".95"/>
+
+          <!-- road -->
+          <rect x="0" y="100" width="340" height="60" fill="url(#roadG)"/>
+          <!-- road glow line -->
+          <rect x="0" y="100" width="340" height="1.5" fill="url(#glowG)"/>
+          <!-- road markings -->
+          <rect x="0"   y="126" width="50" height="4" rx="2" fill="#1a2e55" opacity=".8"/>
+          <rect x="70"  y="126" width="50" height="4" rx="2" fill="#1a2e55" opacity=".8"/>
+          <rect x="140" y="126" width="50" height="4" rx="2" fill="#1a2e55" opacity=".8"/>
+          <rect x="210" y="126" width="50" height="4" rx="2" fill="#1a2e55" opacity=".8"/>
+          <rect x="280" y="126" width="50" height="4" rx="2" fill="#1a2e55" opacity=".8"/>
+
+          <!-- headlight cone -->
+          <path d="M246 94 L310 102 L310 116 L246 108Z" fill="#3b82f6" opacity=".06"/>
+          <path d="M246 96 L295 100 L295 110 L246 106Z" fill="#93c5fd" opacity=".04"/>
+
+          <!-- car body group -->
+          <g transform="translate(120, 68)" filter="url(#glow)">
+            <!-- shadow -->
+            <ellipse cx="63" cy="52" rx="58" ry="6" fill="#000" opacity=".3"/>
+            <!-- main body -->
+            <rect x="2" y="20" width="122" height="28" rx="5" fill="url(#carG)"/>
+            <!-- roof -->
+            <path d="M24 20 Q36 4 58 4 Q80 4 96 20Z" fill="#1d4ed8"/>
+            <!-- roof highlight -->
+            <path d="M30 20 Q40 8 55 8 Q62 8 65 20Z" fill="#2563eb" opacity=".5"/>
+            <!-- windows -->
+            <path d="M30 19.5 Q38 8 56 8 Q64 8 66 19.5Z" fill="#050d1f" opacity=".9"/>
+            <path d="M70 19.5 Q72 9 88 9 Q94 9 95 19.5Z" fill="#050d1f" opacity=".9"/>
+            <!-- window glint lines -->
+            <line x1="34" y1="17" x2="39" y2="10" stroke="#60a5fa" stroke-width="1" opacity=".4"/>
+            <line x1="74" y1="17" x2="76" y2="12" stroke="#60a5fa" stroke-width="1" opacity=".35"/>
+            <!-- door line -->
+            <line x1="68" y1="20" x2="68" y2="48" stroke="#1d4ed8" stroke-width="1" opacity=".6"/>
+            <!-- door handle left -->
+            <rect x="50" y="32" width="8" height="2" rx="1" fill="#93c5fd" opacity=".5"/>
+            <!-- door handle right -->
+            <rect x="80" y="32" width="8" height="2" rx="1" fill="#93c5fd" opacity=".5"/>
+            <!-- front bumper -->
+            <rect x="118" y="30" width="8" height="14" rx="2" fill="#1e3a8a"/>
+            <!-- rear bumper -->
+            <rect x="0" y="30" width="6" height="14" rx="2" fill="#1e3a8a"/>
+            <!-- wheels -->
+            <circle cx="26" cy="49" r="12" fill="#060d1e"/>
+            <circle cx="26" cy="49" r="8"  fill="#0d1b35"/>
+            <circle cx="26" cy="49" r="4"  fill="#1d4ed8"/>
+            <circle cx="26" cy="49" r="2"  fill="#93c5fd"/>
+            <!-- wheel spokes -->
+            <line x1="26" y1="41" x2="26" y2="57" stroke="#1e3a8a" stroke-width="1.5" opacity=".6"/>
+            <line x1="18" y1="49" x2="34" y2="49" stroke="#1e3a8a" stroke-width="1.5" opacity=".6"/>
+            <circle cx="98" cy="49" r="12" fill="#060d1e"/>
+            <circle cx="98" cy="49" r="8"  fill="#0d1b35"/>
+            <circle cx="98" cy="49" r="4"  fill="#1d4ed8"/>
+            <circle cx="98" cy="49" r="2"  fill="#93c5fd"/>
+            <line x1="98" y1="41" x2="98" y2="57" stroke="#1e3a8a" stroke-width="1.5" opacity=".6"/>
+            <line x1="90" y1="49" x2="106" y2="49" stroke="#1e3a8a" stroke-width="1.5" opacity=".6"/>
+            <!-- headlights -->
+            <rect x="120" y="24" width="6" height="8" rx="1.5" fill="#93c5fd"/>
+            <rect x="120" y="34" width="6" height="5" rx="1" fill="#60a5fa" opacity=".7"/>
+            <!-- headlight glow -->
+            <circle cx="128" cy="28" r="8" fill="#3b82f6" opacity=".2" filter="url(#softglow)"/>
+            <!-- tail lights -->
+            <rect x="0" y="24" width="5" height="8" rx="1.5" fill="#ef4444"/>
+            <rect x="0" y="34" width="5" height="5" rx="1" fill="#fca5a5" opacity=".6"/>
+            <!-- speed lines -->
+            <line x1="-6" y1="25" x2="-26" y2="25" stroke="#3b82f6" stroke-width="1.5" opacity=".2" stroke-dasharray="4,3"/>
+            <line x1="-6" y1="32" x2="-34" y2="32" stroke="#3b82f6" stroke-width="1"   opacity=".12" stroke-dasharray="5,4"/>
+            <line x1="-6" y1="39" x2="-20" y2="39" stroke="#3b82f6" stroke-width="1"   opacity=".18" stroke-dasharray="3,4"/>
+          </g>
+
+          <!-- fuel pump station (right side) -->
+          <g transform="translate(290, 60)" opacity=".45">
+            <rect x="0" y="0" width="26" height="40" rx="3" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+            <rect x="4" y="4" width="18" height="12" rx="1" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+            <text x="8" y="13" fill="#3b82f6" font-size="6" font-family="monospace">LKR</text>
+            <rect x="8" y="20" width="10" height="16" rx="1" fill="#0d1e42"/>
+            <line x1="26" y1="10" x2="36" y2="6" stroke="#3b82f6" stroke-width="1.5"/>
+            <path d="M36 6 Q40 6 40 10 L40 20 Q40 22 38 22" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+            <circle cx="38" cy="22" r="2" fill="#3b82f6" opacity=".8"/>
+          </g>
+
+          <!-- HUD readout top left -->
+          <g transform="translate(12, 14)">
+            <rect x="0" y="0" width="80" height="32" rx="5" fill="#060d1e" opacity=".88" stroke="#1e3058" stroke-width="1"/>
+            <text x="8" y="12" fill="#7a90b8" font-size="6" font-family="'Space Mono',monospace">AVG EFFICIENCY</text>
+            <text x="8" y="26" fill="#3b82f6" font-size="12" font-weight="bold" font-family="'Space Mono',monospace" id="heroKML">-- KM/L</text>
+          </g>
+
+          <!-- mini line chart inside hero -->
+          <g transform="translate(12, 54)" opacity=".7">
+            <rect x="0" y="0" width="80" height="40" rx="5" fill="#060d1e" opacity=".85" stroke="#1e3058" stroke-width="1"/>
+            <text x="6" y="10" fill="#7a90b8" font-size="5" font-family="'Space Mono',monospace">FUEL TREND</text>
+            <polyline points="6,32 18,26 30,28 42,20 54,24 66,16 78,18" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="6,32 18,26 30,28 42,20 54,24 66,16 78,18" fill="url(#skyG)" stroke="none" opacity=".15"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ── STAT CARDS ── -->
+    <section class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap fuel">
+          <svg width="20" height="20" color="#3b82f6"><use href="#icon-droplet"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value" id="statLiters">—</div>
+          <div class="stat-label">Total Fuel (L)</div>
+        </div>
+        <div class="stat-bar-track"><div class="stat-bar blue-bar" id="barLiters" style="width:0%"></div></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap trend">
+          <svg width="20" height="20" color="#10b981"><use href="#icon-trend"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value green" id="statKML">—</div>
+          <div class="stat-label">Avg KM / Liter</div>
+        </div>
+        <div class="stat-bar-track"><div class="stat-bar green-bar" id="barKML" style="width:0%"></div></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap cost">
+          <svg width="20" height="20" color="#f59e0b"><use href="#icon-wallet"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value yellow" id="statCost">—</div>
+          <div class="stat-label">Total Cost</div>
+        </div>
+        <div class="stat-bar-track"><div class="stat-bar yellow-bar" id="barCost" style="width:0%"></div></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap road">
+          <svg width="20" height="20" color="#06b6d4"><use href="#icon-speed"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value cyan" id="statKM">—</div>
+          <div class="stat-label">Total KM</div>
+        </div>
+        <div class="stat-bar-track"><div class="stat-bar cyan-bar" id="barKM" style="width:0%"></div></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap calc">
+          <svg width="20" height="20" color="#8b5cf6"><use href="#icon-calc"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value purple" id="statCPK">—</div>
+          <div class="stat-label">Cost / KM</div>
+        </div>
+        <div class="stat-bar-track"><div class="stat-bar purple-bar" id="barCPK" style="width:0%"></div></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap entries">
+          <svg width="20" height="20" color="#ec4899"><use href="#icon-list"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value pink" id="statEntries">—</div>
+          <div class="stat-label">Fill-up Entries</div>
+        </div>
+        <div class="stat-bar-track"><div class="stat-bar pink-bar" id="barEntries" style="width:0%"></div></div>
+      </div>
+
+    </section>
+
+    <!-- ── GRID: FORM + AI PANEL ── -->
+    <div class="two-col">
+
+      <!-- Form card -->
+      <section class="card form-card">
+        <h2 class="card-title">
+          <span class="card-title-icon" style="background:rgba(59,130,246,.12);color:#3b82f6">
+            <svg width="16" height="16"><use href="#icon-plus"/></svg>
+          </span>
+          Log Fill-up
+        </h2>
+
+        <div class="form-group">
+          <label for="inputDate">
+            <svg width="11" height="11"><use href="#icon-cal"/></svg>
+            Date <span>(leave blank = today)</span>
+          </label>
+          <input type="date" id="inputDate" />
+        </div>
+
+        <div class="form-group">
+          <label for="inputLiters">
+            <svg width="11" height="11"><use href="#icon-droplet"/></svg>
+            Liters <span class="req">*</span>
+          </label>
+          <input type="number" id="inputLiters" placeholder="e.g. 12.5" step="0.1" min="0" />
+        </div>
+
+        <div class="form-group">
+          <label for="inputCost">
+            <svg width="11" height="11"><use href="#icon-wallet"/></svg>
+            Total Cost <span class="req">*</span>
+          </label>
+          <input type="number" id="inputCost" placeholder="e.g. 3750" step="0.01" min="0" />
+        </div>
+
+        <div class="form-group">
+          <label for="inputOdometer">
+            <svg width="11" height="11"><use href="#icon-speed"/></svg>
+            Odometer (KM) <span class="req">*</span>
+          </label>
+          <input type="number" id="inputOdometer" placeholder="e.g. 48500" step="1" min="0" />
+        </div>
+
+        <button class="btn-submit" id="btnSubmit" onclick="submitFuel()">
+          <svg width="15" height="15" class="btn-icon"><use href="#icon-pump"/></svg>
+          <span class="btn-text">Analyse &amp; Save</span>
+          <span class="btn-spinner" style="display:none">
+            <svg width="15" height="15" class="spin"><use href="#icon-refresh"/></svg>
+          </span>
+        </button>
+
+        <div class="form-msg" id="formMsg"></div>
+
+        <!-- decorative mini car drawing -->
+        <div class="form-car-deco" aria-hidden="true">
+          <svg viewBox="0 0 160 50" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="dc" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2563eb" stop-opacity=".25"/>
+                <stop offset="100%" stop-color="#1d4ed8" stop-opacity=".1"/>
+              </linearGradient>
+            </defs>
+            <rect x="2" y="18" width="130" height="26" rx="4" fill="url(#dc)"/>
+            <path d="M26 18 Q38 3 58 3 Q80 3 96 18Z" fill="#1d4ed8" opacity=".18"/>
+            <circle cx="24" cy="44" r="9" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity=".25"/>
+            <circle cx="110" cy="44" r="9" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity=".25"/>
+            <rect x="126" y="22" width="8" height="10" rx="2" fill="#93c5fd" opacity=".2"/>
+            <!-- speed lines -->
+            <line x1="148" y1="26" x2="158" y2="26" stroke="#3b82f6" stroke-width="1" opacity=".15" stroke-dasharray="3,2"/>
+            <line x1="145" y1="31" x2="158" y2="31" stroke="#3b82f6" stroke-width="1" opacity=".1" stroke-dasharray="4,3"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- AI Insights card -->
+      <section class="card ai-card">
+        <h2 class="card-title">
+          <span class="card-title-icon" style="background:rgba(16,185,129,.12);color:#10b981">
+            <svg width="16" height="16"><use href="#icon-ai"/></svg>
+          </span>
+          AI Insights
+        </h2>
+
+        <div class="ai-alerts" id="aiAlerts">
+          <div class="placeholder-line"></div>
+          <div class="placeholder-line short"></div>
+        </div>
+
+        <div class="ai-section-label">
+          <svg width="12" height="12" color="#f59e0b"><use href="#icon-tip"/></svg>
+          Smart Tips
+        </div>
+        <ul class="ai-tips" id="aiTips">
+          <li class="placeholder-line"></li>
+          <li class="placeholder-line short"></li>
+        </ul>
+
+        <button class="btn-refresh" onclick="loadAnalysis()">
+          <svg width="12" height="12"><use href="#icon-refresh"/></svg>
+          Refresh Analysis
+        </button>
+      </section>
+    </div>
+
+    <!-- ── CHART ── -->
+    <section class="card chart-card">
+      <div class="chart-header">
+        <h2 class="card-title">
+          <span class="card-title-icon" style="background:rgba(6,182,212,.12);color:#06b6d4">
+            <svg width="16" height="16"><use href="#icon-chart"/></svg>
+          </span>
+          Analytics Chart
+        </h2>
+        <div class="chart-legend">
+          <span class="legend-item">
+            <span class="legend-dot" style="background:#3b82f6"></span>Fuel Usage (L)
+          </span>
+          <span class="legend-item">
+            <span class="legend-dot" style="background:#10b981"></span>Efficiency (KM/L)
+          </span>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <img id="chartImg" src="/ai/output.png" alt="Fuel analytics chart"
+             onerror="this.style.display='none'; document.getElementById('chartPlaceholder').style.display='flex'" />
+        <div id="chartPlaceholder" class="chart-placeholder">
+          <div class="placeholder-inner">
+            <svg width="44" height="44" opacity=".2" color="#3b82f6"><use href="#icon-chart"/></svg>
+            <span>Chart generates after first AI run</span>
+          </div>
+        </div>
+      </div>
+      <div class="chart-refresh-note">
+        <svg width="11" height="11"><use href="#icon-refresh"/></svg>
+        Updates automatically after every new entry
+      </div>
+    </section>
+
+    <!-- ── HISTORY TABLE ── -->
+    <section class="card history-card">
+      <h2 class="card-title">
+        <span class="card-title-icon" style="background:rgba(139,92,246,.12);color:#8b5cf6">
+          <svg width="16" height="16"><use href="#icon-table"/></svg>
+        </span>
+        Fill-up History
+      </h2>
+      <div class="table-wrap">
+        <table id="historyTable">
+          <thead>
+            <tr>
+              <th><svg width="10" height="10"><use href="#icon-cal"/></svg> Date</th>
+              <th><svg width="10" height="10"><use href="#icon-droplet"/></svg> Liters</th>
+              <th><svg width="10" height="10"><use href="#icon-wallet"/></svg> Cost</th>
+              <th><svg width="10" height="10"><use href="#icon-speed"/></svg> Odometer</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <tr><td colspan="4" class="loading-row">Loading history…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <svg width="15" height="15"><use href="#icon-car"/></svg>
+        AutoPulse AI
+      </div>
+      <span class="footer-sep">|</span>
+      <span>Node.js + Express + Python + Matplotlib</span>
+      <span class="footer-sep">|</span>
+      <span class="footer-eco">
+        <svg width="13" height="13" color="#10b981"><use href="#icon-leaf"/></svg>
+        Drive smart, save fuel
+      </span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

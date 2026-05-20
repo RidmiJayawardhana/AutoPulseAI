@@ -1,0 +1,16 @@
+{
+  "name": "autopulse-ai",
+  "version": "1.0.0",
+  "description": "AutoPulse AI — Intelligent Fuel Consumption Tracker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
